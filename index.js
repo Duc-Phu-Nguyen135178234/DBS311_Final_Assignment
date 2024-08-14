@@ -30,6 +30,10 @@ app.engine('.hbs', exphbs.engine({
 
 app.set('view engine', 'hbs');
 
+app.get('/', (req, res) => {
+    res.redirect('/api/chart');
+});
+
 // Routes
 app.use('/api', studentRoutes);
 
