@@ -1,0 +1,23 @@
+<div class="box">
+    <h1>Top 10 Students Leaderboard</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Average Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each students}}
+            <tr>
+                <td>{{incrementedIndex @index}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.average_grade}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

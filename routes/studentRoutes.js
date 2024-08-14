@@ -59,4 +59,52 @@ router.delete('/students/delete/:id', async (req, res) => {
    }
 });
 
+router.get('/students/leaderboard', async (req, res) => {
+   try {
+       const leaderboard = await Student.aggregate([
+           { $unwind: "$courses" }, // Flatten the courses array
+           {
+               $group: {
+                   _id: "$_id",
+                   name: { $first: "$name" },
+                   email: { $first: "$email" },
+                   student_id: { $first: "$student_id" },
+                   total_grade: {
+                       $sum: {
+                           $switch: {
+                               branches: [
+                                   { case: { $eq: ["$courses.grade", "A+"] }, then: 95 },
+                                   { case: { $eq: ["$courses.grade", "A"] }, then: 85 },
+                                   { case: { $eq: ["$courses.grade", "B"] }, then: 75 },
+                                   { case: { $eq: ["$courses.grade", "C"] }, then: 65 },
+                                   { case: { $eq: ["$courses.grade", "D"] }, then: 55 },
+                                   { case: { $eq: ["$courses.grade", "F"] }, then: 25 },
+                               ],
+                               default: 0
+                           }
+                       }
+                   },
+                   course_count: { $sum: 1 } // Count the number of courses
+               }
+           },
+           {
+               $addFields: {
+                   average_grade: { $divide: ["$total_grade", "$course_count"] } // Calculate the average grade
+               }
+           },
+           { $sort: { average_grade: -1, name: 1 } }, // Sort by highest average grade, then by name
+           { $limit: 10 } // Limit to top 10 students
+       ]);
+
+       res.render('leaderboard', { students: leaderboard });
+   } catch (err) {
+       res.status(500).send(err);
+   }
+});
+
+router.get('/chart', (req, res) => {
+   res.render('chart');
+});
+
+
 module.exports = router;
