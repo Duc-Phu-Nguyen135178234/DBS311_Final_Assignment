@@ -56,4 +56,11 @@ This API setup provides the necessary endpoints to manage student records, allow
 **Endpoint:** `/api/students/leaderboard`  
 **Description:** Retrieves the top 10 students with the highest average grades.  
 **Response:** Renders an HTML page displaying the leaderboard with the top 10 students based on their average grades.  
-**Test Online:** [Leaderboard on Vercel](https://dbs-311-final-assignment-12hnkv43a-kevins-pr
+**Test Online:** [Leaderboard on Vercel](https://dbs-311-final-assignment-12hnkv43a-kevins-projects-b2072a7e.vercel.app/api/students/leaderboard)
+
+### Data Visualization Chart
+**Method:** GET  
+**Endpoint:** `/chart`  
+**Description:** Renders an HTML page displaying MongoDB Charts visualizations.  
+**Response:** Provides a visual representation of student data through charts embedded in the HTML page.  
+**Test Online:** [Chart on Vercel](https://dbs-311-final-assignment-12hnkv43a-kevins-projects-b2072a7e.vercel.app/api/chart)
